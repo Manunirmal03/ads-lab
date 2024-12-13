@@ -1,0 +1,138 @@
+&lt;?php
+$servername = &quot;localhost&quot;;
+$username = &quot;root&quot;;
+$password = &quot;&quot;;
+$dbname=&quot;subha&quot;;
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password,$dbname);
+
+// Check connection
+if (!$conn) {
+die(&quot;Connection failed: &quot; . mysqli_connect_error());
+}
+echo &quot;Connected successfully&quot;;
+?&gt;
+
+login.php
+&lt;?php
+include &#39;conn.php&#39;;
+if(isset($_POST[&#39;submit&#39;]))
+{
+
+$uname=$_POST[&#39;username&#39;];
+
+$psswrd=$_POST[&#39;password&#39;];
+$sql = &quot;SELECT * FROM user_registration where username=&#39;$uname&#39; and password=&#39;$psswrd&#39;&quot;;
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) &gt; 0)
+{
+header(&quot;location:welcome.php&quot;) ;
+}
+else
+{
+
+header(&quot;location:error.php&quot;) ;
+
+}
+
+mysqli_close($conn);
+}
+else
+{
+?&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;center&gt;
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+Username:
+&lt;input type=&quot;textbox&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+
+Password:
+&lt;input type=&quot;textbox&quot; name=&quot;password&quot;&gt;&lt;br&gt;
+&lt;a href=&quot;registration.php&quot;&gt;New User?Sign Up&lt;/a&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot;&gt;&lt;br&gt;
+&lt;/form&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;?php
+}
+?&gt;
+
+registration.php
+&lt;?php
+include &#39;conn.php&#39;;
+if(isset($_POST[&#39;submit&#39;]))
+{
+$fname=$_POST[&#39;firstname&#39;];
+$lname=$_POST[&#39;lastname&#39;];
+$cno=$_POST[&#39;contactnumber&#39;];
+$email=$_POST[&#39;mail&#39;];
+$uname=$_POST[&#39;username&#39;];
+$psswrd=$_POST[&#39;password&#39;];
+$sql = &quot;INSERT INTO
+user_registration(firstname,lastname,contactno,email,username,password)VALUES
+(&#39;$fname&#39;,&#39;$lname&#39;,&#39;$cno&#39;,&#39;$email&#39;,&#39;$uname&#39;,&#39;$psswrd&#39;)&quot;;
+
+if (mysqli_query($conn, $sql)) {
+echo &quot;New record created successfully&quot;;
+
+} else {
+
+echo &quot;Error: &quot; . $sql . &quot;&lt;br&gt;&quot; . mysqli_error($conn);
+
+}
+
+mysqli_close($conn);
+}
+else
+{
+?&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;center&gt;
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+Firstname:
+&lt;input type=&quot;textbox&quot; name=&quot;firstname&quot;&gt;&lt;br&gt;
+Lastname:
+&lt;input type=&quot;textbox&quot; name=&quot;lastname&quot;&gt;&lt;br&gt;
+Contact Number:
+&lt;input type=&quot;textbox&quot; name=&quot;contactnumber&quot;&gt;&lt;br&gt;
+Email:
+&lt;input type=&quot;textbox&quot; name=&quot;mail&quot;&gt;&lt;br&gt;
+Username:
+
+&lt;input type=&quot;textbox&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+Password:
+&lt;input type=&quot;textbox&quot; name=&quot;password&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot;&gt;&lt;br&gt;
+&lt;/form&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;?php
+}
+?&gt;
+welcome.php
+&lt;html&gt;
+&lt;body&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;center&gt;&lt;b&gt;
+WELCOME&lt;/b&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+error.php
+&lt;html&gt;
+&lt;body&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;center&gt;
+
+ERROR
+&lt;br&gt;&lt;br&gt;
+&lt;a href=&quot;login.php&quot;&gt;&lt;b&gt;&lt; Back&lt;/b&gt;&lt;/a&gt;&lt;br&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
