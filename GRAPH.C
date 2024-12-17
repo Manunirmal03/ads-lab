@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<conio.h>
 #define MAX 100
-
 int a[20][20],q[20],visited[20],n,i,j,f=0,r=-1,indegree[20];
 int adj[MAX][MAX],reach[20];
 int queue[MAX],front=-1,rear=-1;
